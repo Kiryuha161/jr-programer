@@ -24,6 +24,7 @@ public class MenuUIHandler : MonoBehaviour
         ColorPicker.Init();
         //this will call the NewColorSelected function when the color picker have a color button clicked.
         ColorPicker.onColorChanged += NewColorSelected;
+        ColorPicker.SelectColor(MainManager.Instance.TeamColor);
     }
 
     public void StartNew(int scene)
@@ -33,6 +34,7 @@ public class MenuUIHandler : MonoBehaviour
 
     public void Exit()
     {
+        MainManager.Instance.SaveColor();
 #if UNITY_EDITOR   //# - условная компиляция, т.е. компиляция или пропуск части кода в зависимости от того существует ли условие или нет. Все строки с # не являются кодом. Они не будут 
         //выполнены вообще, если не выполнено условие, его как будто не существует. Это инструкция для компилятора. Ещё это называют препроцессорами. Код 
         EditorApplication.ExitPlaymode();
@@ -40,5 +42,16 @@ public class MenuUIHandler : MonoBehaviour
         Application.Quit();
 #endif
    
+    }
+
+    public void SaveColorClicked()
+    {
+        MainManager.Instance.SaveColor();
+    }
+
+    public void LoadColorClicked()
+    {
+        MainManager.Instance.LoadColor();
+        ColorPicker.SelectColor(MainManager.Instance.TeamColor);
     }
 }
